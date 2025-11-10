@@ -1,0 +1,1 @@
+Hi! I’m Dominique — a cloud engineer in training with a passion for automation, infrastructure, and the expanding role of AI in cloud computing. I’m currently immersed in an intensive bootcamp where I’m gaining hands-on experience with AWS, Terraform, Linux, and DevOps practices.
