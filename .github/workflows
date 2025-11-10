@@ -1,27 +1,24 @@
-name: Deploy Polly Audio (Beta & Prod)
+name: Deploy AWS Polly (Pull Request)
 
 on:
   pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
 
 jobs:
-  synthesize-and-deploy:
+  deploy-polly:
+    name: Generate Audio with Amazon Polly
     runs-on: ubuntu-latest
 
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      S3_BUCKET_NAME: ${{ secrets.S3_polly-use-case-prod}}
-      S3_BUCKET_NAME: ${{ secrets.S3_polly- }}
-      GITHUB_EVENT_NAME: ${{ github.event_name }}
+      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+      GITHUB_EVENT_NAME: pull_request
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -37,6 +34,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install boto3
 
-      - name: Generate and Upload Polly Audio
+      - name: Run Amazon Polly synthesis
         run: |
           python synthesize.py
